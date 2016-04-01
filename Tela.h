@@ -1,13 +1,13 @@
 #include <ncurses.h>
 
 typedef struct tipomatriz{
-  int ocupado = 0;
+int ocupado;
+char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
 
 typedef struct tela{
-  Tipomatriz matriz_interface[15][25];
-  char matriz_gui[30][30];
+Tipomatriz matriz_gui[15][25];
 };
 typedef struct tela Tela;
 
