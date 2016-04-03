@@ -2,6 +2,7 @@
 
 typedef struct tipomatriz{
 int ocupado;
+int pardecor;
 char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
