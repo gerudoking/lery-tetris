@@ -6,6 +6,8 @@ Tela* cria_tela(){
 	int i, j;
 
 	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_BLUE, COLOR_BLACK);
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
 	t = (Tela*) malloc(sizeof(Tela));
 	
@@ -30,12 +32,17 @@ Tela* cria_tela(){
 
 int mostra_tela(Tela* t){
 	int i, j;
-
-	attrset(COLOR_PAIR(1));
+	
+	//comando_limpa_tela(); n sei qual é ainda, to procurando na documentação do ncurses
 
 	for(i = 0; i<15; i++){
 		for(j = 0; j<25; j++){
+			attrset(COLOR_PAIR((*t).matriz_gui[i][j].pardecor));
 			mvaddch(i, j, (*t).matriz_gui[i][j].caracter);
+			
+			if((*t).matriz_gui[i][j].ocupado == 1){
+				mvaddch(i, j, 'X');
+			}
 		}
 	}
 	return 0;
