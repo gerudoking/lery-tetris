@@ -1,4 +1,4 @@
-all: 
+all: programa
 
 programa: tela.o pecas.o engine.o
 gcc tela.o pecas.o engine.o -o
