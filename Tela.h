@@ -1,8 +1,8 @@
 #include <ncurses.h>
 
 typedef struct tipomatriz{
-int ocupado;
-int pardecor;
+int ocupado = 0;
+int pardecor = 1;
 char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
