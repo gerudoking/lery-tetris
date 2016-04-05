@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <stdlib.h>
 
 typedef struct tipomatriz{
 int ocupado = 0;
