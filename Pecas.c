@@ -16,13 +16,13 @@ peca* nova_peca(Tela* tela){
 	(*a).posicao_y=6;
 		if((*a).orientacao==0){
 			for(i=0;i<(*a).tamanho;i++){
-				*tela.matriz_gui[6+i][13].character="X";
+				*tela.matriz_gui[6+i][13].caracter="X";
 				*tela.matriz_gui[6+i][13].ocupado=1;
 			}
 		}
 		else{
 			for(i=0;i<(*a).tamanho;i++){
-				*tela.matriz_gui[6][13+i].character="X";
+				*tela.matriz_gui[6][13+i].caracter="X";
 				*tela.matriz_gui[6][13+i].ocupado=1;
 			}
 		}
