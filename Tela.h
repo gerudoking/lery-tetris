@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 typedef struct tipomatriz{
-int ocupado = 0;
-int pardecor = 1;
+int ocupado;
+int pardecor;
 char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
