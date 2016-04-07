@@ -1,6 +1,6 @@
 #include "Tela.h"
 
-Tela* cria_tela(){
+Tela* cria_tela(void){
 	Tela* t;
 	int i, j;
 
@@ -13,6 +13,8 @@ Tela* cria_tela(){
 	for(i = 0; i<25; i++){
 		for(j = 0; j<15; j++){
 			(*t).matriz_gui[j][i].caracter = 32;
+			(*t).matriz_gui[j][i].ocupado = 0;
+			(*t).matriz_gui[j][i].pardecor = 1;
 		}
 	}
 
@@ -38,17 +40,37 @@ Tela* cria_tela(){
 int mostra_tela(Tela* t){
 	int i, j;
 	
-	//comando_limpa_tela(); n sei qual é ainda, to procurando na documentação do ncurses
+	clear();
 
 	for(i = 0; i<15; i++){
 		for(j = 0; j<25; j++){
 			attrset(COLOR_PAIR((*t).matriz_gui[i][j].pardecor));
-			
-			if(((*t).matriz_gui[i][i].ocupado) && ((*t).matriz_gui[i][i].caracter != '|') && ((*t).matriz_gui[i][i].caracter != '=')){
-				(*t).matriz_gui[i][i].caracter = 'X';
-			}
 			mvaddch(i, j, (*t).matriz_gui[i][j].caracter);
 		}
 	}
 	return 0;
 }
+
+
+//Main para teste do módulo. Seems perfect so far.
+
+/*
+int main(){
+	Tela* t;
+	initscr();
+	start_color();
+	
+	t = cria_tela();
+
+	mostra_tela(t);
+	getch();
+
+	(*t).matriz_gui[5][6].ocupado = 1;
+	(*t).matriz_gui[5][6].caracter = 'X';
+	
+	mostra_tela(t);
+	getch();
+
+	endwin();
+	return 0;
+}*/
