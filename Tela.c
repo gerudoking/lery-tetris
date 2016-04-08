@@ -51,6 +51,22 @@ int mostra_tela(Tela* t){
 	return 0;
 }
 
+int mostra_tela_inicial(Tela* t){
+	mostra_tela(t);
+
+	attrset(COLOR_PAIR(3));
+	mvprintw(5, 7, "LERY TETRIS");
+	attrset(COLOR_PAIR(2));
+	mvprintw(10, 3, "Pressione qualquer");
+	mvprintw(11, 3, "tecla para começar!  |");
+
+	return 0;
+}
+
+int mostra_tela_final(Tela* t, int pont){
+	return 0;
+}
+
 
 //Main para teste do módulo. Seems perfect so far.
 
