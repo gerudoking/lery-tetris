@@ -16,13 +16,11 @@ peca* nova_peca(Tela* tela){
 		if((*a).orientacao==0){
 			for(i=0;i<(*a).tamanho;i++){
 				(*tela).matriz_gui[6+i][13].caracter="X";
-				(*tela).matriz_gui[6+i][13].ocupado=1;
 			}
 		}
 		else{
 			for(i=0;i<(*a).tamanho;i++){
 				(*tela).matriz_gui[6][13+i].caracter="X";
-				(*tela).matriz_gui[6][13+i].ocupado=1;
 			}
 		}
 	return a;
@@ -33,34 +31,68 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 		if((*a).orientacao==0){/*dependendo da orientacao da peca(vertical ou horizontal), agiremos diferentemente*/
 			if(x==0 || x==24) return 1;/*primeiro verificamos se a peca ja 								esta nos extremos da tela. Nesse caso, ela
 								nao pode mover*/
-			for(i=0;i<Tamanho;i++){
-				if((*tela).matriz_gui[y+i][x+1].ocupado==1 || (*tela).matriz_gui[y+i][x-1].ocupado==1){/*aqui checamos se ha parte de outra peca ao lado da peca ativa. a flag sera usada para sair da funcao caso isso seja verdade*/
-					flag=1;
-					i=Tamanho;
+			if(direcao==1){/*dependendo da direcao desejada do movimento, checaremos se ha parte de outra peca do lado adequado*/
+				for(i=0;i<Tamanho;i++){
+					if((*tela).matriz_gui[y+i][x+1].ocupado==1){/*aqui checamos se ha parte de outra peca ao lado da peca ativa. a flag sera usada para sair da funcao caso isso seja verdade*/
+						flag=1;
+						i=Tamanho;
+					}
 				}
-			}
-			if(flag!=0) return 2;/*cada possivel caso de erro tem o seu retorno, permitindo
+				if(flag!=0) return 2;/*cada possivel caso de erro tem o seu retorno, permitindo
 						acoes de acordo com cada caso*/
-			if(direcao==1){
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x+i][y].caracter=" ";/*Temos que limpar o lugar que a peca ocupava antes de move-la*/
+				}
 				((*a).posicao_x)++;/*finalmente, a posicao na struct da peca e mudada*/
+			
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x+i][y].caracter="X";
+				}
 				return 0;
 			}
+
 			if(direcao==-1){
-				((*a).posicao_x)--;
-				return 0;	
+				for(i=0;i<Tamanho;i++){
+					if((*tela).matriz_gui[y+i][x-1].ocupado==1){
+						flag=1;
+						i=Tamanho;
+					}
+				}
+				if(flag!=0) return 3;
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x+i][y].caracter=" ";
+				}
+				((*a).posicao_x)--;/*finalmente, a posicao na struct da peca e mudada*/
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x+i][y].caracter="X";
+				}
+				return 0;
 			}
 		return 3;/*nesse ponto, se a funcao nao terminou, alguma coisa deu errado*/
 		}
 		if((*a).orientacao==1){
 			if(x==0 || x+Tamanho==24) return 4;
-			
-			if((*tela).matriz_gui[y][x-1].ocupado==1 || (*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
+						
 			if(direcao==1){
-				((*a).posicao_x)++;
-				return 0;
+			if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
+			for(i=0;i<(*a).tamanho;i++){
+				(*tela).matriz_gui[x][y+i].caracter=" ";
+			}
+			((*a).posicao_x)++;
+			for(i=0;i<(*a).tamanho;i++){
+				(*tela).matriz_gui[x][y+i].caracter="X";
+			}
+			return 0;
 			}
 			if(direcao==-1){
+				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x][y+i].caracter=" ";
+				}
 				((*a).posicao_x)--;
+				for(i=0;i<(*a).tamanho;i++){
+					(*tela).matriz_gui[x][y+i].caracter="X";
+				}
 				return 0;	
 			}
 			return 6;
@@ -73,9 +105,14 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	if((*a).orientacao==0){
 		if(y+Tamanho==14) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
 		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
+		for(i=0;i<(*a).tamanho;i++){
+			(*tela).matriz_gui[x+i][y].caracter=" ";
+		}
 		((*a).posicao_y)++;
-		
-		return 0;
+		for(i=0;i<(*a).tamanho;i++){
+			(*tela).matriz_gui[x+i][y].caracter="X";
+		}
+	return 0;
 	}
 	
 	if((*a).orientacao==1){
@@ -88,7 +125,13 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 			}
 		}
 		if(flag==1) return 4;
+		for(i=0;i<(*a).tamanho;i++){
+			(*tela).matriz_gui[x][y+i].caracter=" ";
+		}
 		((*a).posicao_y)++;
+		for(i=0;i<(*a).tamanho;i++){
+			(*tela).matriz_gui[x][y+i].caracter=" ";
+		}
 		return 0;
 	}
 	return 5;
