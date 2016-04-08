@@ -71,6 +71,7 @@ int main(){
 	mostra_tela(t);
 	getch();
 
+	free(t);
 	endwin();
 	return 0;
 }*/
