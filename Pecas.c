@@ -75,7 +75,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
 		((*a).posicao_y)++;
 		
-	return 0;
+		return 0;
 	}
 	
 	if((*a).orientacao==1){
