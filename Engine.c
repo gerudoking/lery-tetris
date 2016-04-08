@@ -1,26 +1,41 @@
 #include <stdio.h>
-#include <ncurses.h>
-#include "Pecas.c"
+#include "Engine.h"
 #include "Pecas.h"
 
 void inicia_ncurses(){
-	
 	initscr();
 	cbreak();
-  noecho();
-  timeout(0);
-  
+	noecho();
+	timeout(0);
 }
 
 void finaliza_ncurses(){
-	
 	endwin();
-	
+}
+
+int fixa_peca(Tela* tela, peca* tetromino){
+	int x, y;
+	x = tetromino.posicao_x;
+	y = tetromino.posicao_y;
+  
+	for(int i=0; i<*peca.tamanho; i++){
+		if(tetromino.orientacao == 0){
+			*tela.matriz_gui[x][y+i].ocupado = 1;
+    		*tela.matriz_gui[x][y+i].caracter = 'X';  
+	}
+		if(tetromino.orientacao == 1){
+			*tela.matriz_gui[x+i][y].ocupado = 1;
+    		*tela.matriz_gui[x+i][y].caracter = 'X';  
+  		}
+	}
+	return 1;
 }
 
 int movimento(Tela* tela){
+  
 	int locked, resultado, retorno;
 	peca* tetromino = nova_peca(tela);
+	mostra_tela(tela);
 	locked = 0;
 	while(locked = 0) {
 		switch(getch()) {
@@ -34,20 +49,24 @@ int movimento(Tela* tela){
 				resultado = move_peca_y(tela, tetromino);
 				break;
 			case 'q':  // 'q' de "Quit"
-      	return 1;
-      	break;
+				return 1;
+      			break;
 		}
-		if (resultado == 1) locked = 1;
-	}
+	mostra_tela(tela);
+	if (resultado < 5){
+    	fixa_peca(tela, tetromino);
+    	locked = 1;
+	}    
+	return 0;
 }
 
 void jogo() {
 	int end = 0;
 
 	Tela* tela = cria_tela();
-	mostra_tela(tela);
   
 	while(end == 0){
+  		mostra_tela(tela);
 		end = movimento(tela);
 	}
 }
