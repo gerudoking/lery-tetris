@@ -81,7 +81,6 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	
 	if((*a).orientacao==1){
 		if(y==14) return 3;/*teste de encontro com borda da tela*/
-		
 		for(i=0;i<Tamanho;i++){
 			if((*tela).matriz_gui[y+1][x+i].ocupado==1){
 				flag=1;
