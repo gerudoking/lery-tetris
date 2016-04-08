@@ -2,28 +2,27 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
-#include "Tela.h"
 #include "Tela.c"
 #include "Pecas.h"
 
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
-	(*a).tamanho=(rand() %3)+3;/*Escolhe um tamanho entre 3 e 5 para a peca*/
+	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para a peca*/
 	(*a).orientacao=rand() %2;/*Define a orientação: 0 e vertical, 1 e horizontal*/
 	(*a).cor=rand() %3;
 	(*a).posicao_x=13;
 	(*a).posicao_y=6;
 		if((*a).orientacao==0){
 			for(i=0;i<(*a).tamanho;i++){
-				*tela.matriz_gui[6+i][13].character="X";
-				*tela.matriz_gui[6+i][13].ocupado=1;
+				(*tela).matriz_gui[6+i][13].caracter="X";
+				(*tela).matriz_gui[6+i][13].ocupado=1;
 			}
 		}
 		else{
 			for(i=0;i<(*a).tamanho;i++){
-				*tela.matriz_gui[6][13+i].character="X";
-				*tela.matriz_gui[6][13+i].ocupado=1;
+				(*tela).matriz_gui[6][13+i].caracter="X";
+				(*tela).matriz_gui[6][13+i].ocupado=1;
 			}
 		}
 	return a;
@@ -73,7 +72,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	int x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,i,flag=0;
 	if((*a).orientacao==0){
 		if(y+Tamanho==14) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
-		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1]) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
+		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
 		((*a).posicao_y)++;
 		
 	return 0;
@@ -81,6 +80,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	
 	if((*a).orientacao==1){
 		if(y==14) return 3;/*teste de encontro com borda da tela*/
+		
 		for(i=0;i<Tamanho;i++){
 			if((*tela).matriz_gui[y+1][x+i].ocupado==1){
 				flag=1;
@@ -93,3 +93,4 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	}
 	return 5;
 }
+
