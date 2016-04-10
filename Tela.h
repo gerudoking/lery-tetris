@@ -8,7 +8,7 @@ char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
 
-typedef struct tela{
+struct tela{
 Tipomatriz matriz_gui[15][25];
 };
 typedef struct tela Tela;
