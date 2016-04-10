@@ -4,11 +4,8 @@ Tela* cria_tela(void){
 	Tela* t;
 	int i, j;
 
-	init_pair(1, COLOR_RED, COLOR_BLACK);//Trataremos o 1 como a cor vermelha nos caracteres
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);//E o 2 como azul
-	init_pair(3, COLOR_GREEN, COLOR_BLACK);//por sua vez o 3 como verde
-
 	t = (Tela*) malloc(sizeof(Tela));
+	if(t == NULL) return NULL;
 	
 	for(i = 0; i<25; i++){
 		for(j = 0; j<15; j++){
@@ -58,24 +55,43 @@ int mostra_tela_inicial(Tela* t){
 	mvprintw(5, 7, "LERY TETRIS");
 	attrset(COLOR_PAIR(2));
 	mvprintw(10, 3, "Pressione qualquer");
-	mvprintw(11, 3, "tecla para começar!  |");
+	mvprintw(11, 3, "tecla para começar");
+	attrset(COLOR_PAIR(1));
+	mvprintw(11, 22, "   |");
 
+	free(t);
 	return 0;
 }
 
 int mostra_tela_final(Tela* t, int pont){
+	mostra_tela(t);
+
+	attrset(COLOR_PAIR(3));
+	mvprintw(5, 8, "GAME OVER");
+	attrset(COLOR_PAIR(2));
+	mvprintw(10, 4, "Sua pontuação é:");
+	mvprintw(11, 12, "%d", pont);
+
+	free(t);
 	return 0;
 }
 
-
 //Main para teste do módulo. Seems perfect so far.
 
-/*
-int main(){
+/*int main(){
 	Tela* t;
 	initscr();
 	start_color();
+
+	init_pair(1, COLOR_RED, COLOR_BLACK);//Trataremos o 1 como a cor vermelha nos caracteres
+	init_pair(2, COLOR_BLUE, COLOR_BLACK);//E o 2 como azul
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);//por sua vez o 3 como verde
 	
+	t = cria_tela();
+
+	mostra_tela_inicial(t);
+	getch();
+
 	t = cria_tela();
 
 	mostra_tela(t);
@@ -87,7 +103,11 @@ int main(){
 	mostra_tela(t);
 	getch();
 
-	free(t);
+	t = cria_tela();
+
+	mostra_tela_final(t, 100);
+	getch();
+
 	endwin();
 	return 0;
 }*/
