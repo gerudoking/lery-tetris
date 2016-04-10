@@ -16,12 +16,12 @@ peca* nova_peca(Tela* tela){
 	(*a).posicao_y=6;
 		if((*a).orientacao==0){
 			for(i=0;i<(*a).tamanho;i++){
-				(*tela).matriz_gui[6+i][13].caracter="X";
+				(*tela).matriz_gui[6+i][13].caracter='X';
 			}
 		}
 		else{
 			for(i=0;i<(*a).tamanho;i++){
-				(*tela).matriz_gui[6][13+i].caracter="X";
+				(*tela).matriz_gui[6][13+i].caracter='X';
 			}
 		}
 	return a;
@@ -42,12 +42,12 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				if(flag!=0) return 2;/*cada possivel caso de erro tem o seu retorno, permitindo
 						acoes de acordo com cada caso*/
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x+i][y].caracter=" ";/*Temos que limpar o lugar que a peca ocupava antes de move-la*/
+					(*tela).matriz_gui[x+i][y].caracter=' ';/*Temos que limpar o lugar que a peca ocupava antes de move-la*/
 				}
 				((*a).posicao_x)++;/*finalmente, a posicao na struct da peca e mudada*/
 			
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x+i][y].caracter="X";
+					(*tela).matriz_gui[x+i][y].caracter='X';
 				}
 				return 0;
 			}
@@ -61,11 +61,11 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				}
 				if(flag!=0) return 3;
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x+i][y].caracter=" ";
+					(*tela).matriz_gui[x+i][y].caracter=' ';
 				}
 				((*a).posicao_x)--;/*finalmente, a posicao na struct da peca e mudada*/
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x+i][y].caracter="X";
+					(*tela).matriz_gui[x+i][y].caracter='X';
 				}
 				return 0;
 			}
@@ -77,27 +77,28 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 			if(direcao==1){
 			if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
 			for(i=0;i<(*a).tamanho;i++){
-				(*tela).matriz_gui[x][y+i].caracter=" ";
+				(*tela).matriz_gui[x][y+i].caracter=' ';
 			}
 			((*a).posicao_x)++;
 			for(i=0;i<(*a).tamanho;i++){
-				(*tela).matriz_gui[x][y+i].caracter="X";
+				(*tela).matriz_gui[x][y+i].caracter='X';
 			}
 			return 0;
 			}
 			if(direcao==-1){
 				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x][y+i].caracter=" ";
+					(*tela).matriz_gui[x][y+i].caracter=' ';
 				}
 				((*a).posicao_x)--;
 				for(i=0;i<(*a).tamanho;i++){
-					(*tela).matriz_gui[x][y+i].caracter="X";
+					(*tela).matriz_gui[x][y+i].caracter='X';
 				}
 				return 0;	
 			}
 			return 6;
 		}
+return 8;
 }
 
 
@@ -107,11 +108,11 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 		if(y+Tamanho==14) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
 		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
 		for(i=0;i<(*a).tamanho;i++){
-			(*tela).matriz_gui[x+i][y].caracter=" ";
+			(*tela).matriz_gui[x+i][y].caracter=' ';
 		}
 		((*a).posicao_y)++;
 		for(i=0;i<(*a).tamanho;i++){
-			(*tela).matriz_gui[x+i][y].caracter="X";
+			(*tela).matriz_gui[x+i][y].caracter='X';
 		}
 	return 0;
 	}
@@ -127,11 +128,11 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 		}
 		if(flag==1) return 4;
 		for(i=0;i<(*a).tamanho;i++){
-			(*tela).matriz_gui[x][y+i].caracter=" ";
+			(*tela).matriz_gui[x][y+i].caracter=' ';
 		}
 		((*a).posicao_y)++;
 		for(i=0;i<(*a).tamanho;i++){
-			(*tela).matriz_gui[x][y+i].caracter=" ";
+			(*tela).matriz_gui[x][y+i].caracter=' ';
 		}
 		return 0;
 	}
