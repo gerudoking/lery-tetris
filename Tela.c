@@ -49,7 +49,7 @@ int mostra_tela(Tela* t){
 }
 
 int mostra_tela_inicial(){
-	t = cria_tela();
+	Tela* t = cria_tela();
 	mostra_tela(t);
 
 	attrset(COLOR_PAIR(3));
@@ -65,7 +65,7 @@ int mostra_tela_inicial(){
 }
 
 int mostra_tela_final(int pont){
-	t= cria_tela();
+	Tela* t= cria_tela();
 	mostra_tela(t);
 
 	attrset(COLOR_PAIR(3));
