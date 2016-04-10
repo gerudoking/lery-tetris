@@ -48,7 +48,7 @@ int mostra_tela(Tela* t){
 	return 0;
 }
 
-int mostra_tela_inicial(){
+int mostra_tela_inicial(void){
 	Tela* t = cria_tela();
 	mostra_tela(t);
 
@@ -65,7 +65,7 @@ int mostra_tela_inicial(){
 }
 
 int mostra_tela_final(int pont){
-	Tela* t= cria_tela();
+	Tela* t = cria_tela();
 	mostra_tela(t);
 
 	attrset(COLOR_PAIR(3));
@@ -88,8 +88,10 @@ int mostra_tela_final(int pont){
 	init_pair(1, COLOR_RED, COLOR_BLACK);//Trataremos o 1 como a cor vermelha nos caracteres
 	init_pair(2, COLOR_BLUE, COLOR_BLACK);//E o 2 como azul
 	init_pair(3, COLOR_GREEN, COLOR_BLACK);//por sua vez o 3 como verde
+	
+	t = cria_tela();
 
-	mostra_tela_inicial(t);
+	mostra_tela_inicial();
 	getch();
 
 	t = cria_tela();
@@ -103,7 +105,9 @@ int mostra_tela_final(int pont){
 	mostra_tela(t);
 	getch();
 
-	mostra_tela_final(t, 100);
+	t = cria_tela();
+
+	mostra_tela_final(100);
 	getch();
 
 	endwin();
