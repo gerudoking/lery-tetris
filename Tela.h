@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
-typedef struct tipomatriz{
+struct tipomatriz{
 int ocupado;
 int pardecor;
 char caracter;
