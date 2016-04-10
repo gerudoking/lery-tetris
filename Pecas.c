@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
-#include "Tela.c"
+#include "Tela.h"
 #include "Pecas.h"
 
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
+	a=(peca*)malloc(sizeof(peca));
 	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para a peca*/
 	(*a).orientacao=rand() %2;/*Define a orientação: 0 e vertical, 1 e horizontal*/
 	(*a).cor=rand() %3;
