@@ -41,12 +41,12 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				}
 				if(flag!=0) return 2;/*cada possivel caso de erro tem o seu retorno, permitindo
 						acoes de acordo com cada caso*/
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x+i][y].caracter=' ';/*Temos que limpar o lugar que a peca ocupava antes de move-la*/
 				}
 				((*a).posicao_x)++;/*finalmente, a posicao na struct da peca e mudada*/
 			
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x+i][y].caracter='X';
 				}
 				return 0;
@@ -60,11 +60,11 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 					}
 				}
 				if(flag!=0) return 3;
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x+i][y].caracter=' ';
 				}
 				((*a).posicao_x)--;/*finalmente, a posicao na struct da peca e mudada*/
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x+i][y].caracter='X';
 				}
 				return 0;
@@ -76,22 +76,22 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 						
 			if(direcao==1){
 			if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
-			for(i=0;i<(*a).tamanho;i++){
+			for(i=0;i<Tamanho;i++){
 				(*tela).matriz_gui[x][y+i].caracter=' ';
 			}
 			((*a).posicao_x)++;
-			for(i=0;i<(*a).tamanho;i++){
+			for(i=0;i<Tamanho;i++){
 				(*tela).matriz_gui[x][y+i].caracter='X';
 			}
 			return 0;
 			}
 			if(direcao==-1){
 				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x][y+i].caracter=' ';
 				}
 				((*a).posicao_x)--;
-				for(i=0;i<(*a).tamanho;i++){
+				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[x][y+i].caracter='X';
 				}
 				return 0;	
