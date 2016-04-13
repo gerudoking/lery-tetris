@@ -23,11 +23,11 @@ void fixa_peca(Tela* tela, peca* tetromino){
   y = tetromino->posicao_y;
   
   for(i=0; i<tetromino->tamanho; i++){
-    if(tetromino->orientacao == 0){
+    if(tetromino->orientacao == 1){
 		tela->matriz_gui[y][x+i].ocupado = 1;
     	tela->matriz_gui[y][x+i].caracter = 'X';  
 	}
-    if(tetromino->orientacao == 1){
+    if(tetromino->orientacao == 0){
 		tela->matriz_gui[y+i][x].ocupado = 1;
     	tela->matriz_gui[y+i][x].caracter = 'X';  
   	}
