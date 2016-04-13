@@ -72,7 +72,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 		}
 		if((*a).orientacao==1){
 			if(direcao==1){
-				if(x+Tamanho==23) return 4;
+				if(x+Tamanho==24) return 4;
 				if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter=' ';
