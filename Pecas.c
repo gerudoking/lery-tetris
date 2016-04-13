@@ -5,6 +5,7 @@
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
+	if((*tela).matriz_gui[1][13].caracter=='X') return NULL;
 	a=(peca*)malloc(sizeof(peca));
 	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para a peca*/
 	(*a).orientacao=rand() %2;/*Define a orientação: 0 e vertical, 1 e horizontal*/
