@@ -70,21 +70,21 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 		return 3;/*nesse ponto, se a funcao nao terminou, alguma coisa deu errado*/
 		}
 		if((*a).orientacao==1){
-			if(x==0 || x+Tamanho==24) return 4;
-						
 			if(direcao==1){
-			if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
-			for(i=0;i<Tamanho;i++){
-				(*tela).matriz_gui[y][x+i].caracter=' ';
-			}
-			((*a).posicao_x)++;
-			x=((*a).posicao_x);
-			for(i=0;i<Tamanho;i++){
-				(*tela).matriz_gui[y][x+i].caracter='X';
-			}
-			return 5;
+				if(x+Tamanho==24) return 4;
+				if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
+				for(i=0;i<Tamanho;i++){
+					(*tela).matriz_gui[y][x+i].caracter=' ';
+				}
+				((*a).posicao_x)++;
+				x=((*a).posicao_x);
+				for(i=0;i<Tamanho;i++){
+					(*tela).matriz_gui[y][x+i].caracter='X';
+				}
+				return 5;
 			}
 			if(direcao==-1){
+				if(x==1) return 4;
 				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter=' ';
