@@ -31,7 +31,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 			/*primeiro verificamos se a peca ja 								esta nos extremos da tela. Nesse caso, ela
 								nao pode mover*/
 			if(direcao==1){/*dependendo da direcao desejada do movimento, checaremos se ha parte de outra peca do lado adequado*/
-				if(x==25) return 1;
+				if(x==24) return 1;
 				for(i=0;i<Tamanho;i++){
 					if((*tela).matriz_gui[y+i][x+1].ocupado==1){/*aqui checamos se ha parte de outra peca ao lado da peca ativa. a flag sera usada para sair da funcao caso isso seja verdade*/
 						flag=1;
@@ -51,7 +51,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 			}
 
 			if(direcao==-1){
-				if(x==0) return 1;
+				if(x==1) return 1;
 				for(i=0;i<Tamanho;i++){
 					if((*tela).matriz_gui[y+i][x-1].ocupado==1){
 						flag=1;
@@ -72,7 +72,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 		}
 		if((*a).orientacao==1){
 			if(direcao==1){
-				if(x+Tamanho==25) return 4;
+				if(x+Tamanho==24) return 4;
 				if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter=' ';
@@ -85,7 +85,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				return 5;
 			}
 			if(direcao==-1){
-				if(x==0) return 4;
+				if(x==1) return 4;
 				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter=' ';
