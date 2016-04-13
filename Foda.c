@@ -1,4 +1,4 @@
- #include <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
 #include <ncurses.h>
 
@@ -103,6 +103,7 @@ int mostra_tela_final(int pont){
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
+	if((*tela).matriz_gui[1][13].caracter=='X') return NULL;
 	a=(peca*)malloc(sizeof(peca));
 	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para a peca*/
 	(*a).orientacao=rand() %2;/*Define a orientação: 0 e vertical, 1 e horizontal*/
@@ -125,9 +126,10 @@ peca* nova_peca(Tela* tela){
 int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que vai ser ou -1 ou 1, para mostrar se e para mover para a esquerda ou direita, respectivamente*/
 	int i,flag=0,x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho;
 		if((*a).orientacao==0){/*dependendo da orientacao da peca(vertical ou horizontal), agiremos diferentemente*/
-			if(x==0 || x==24) return 1;/*primeiro verificamos se a peca ja 								esta nos extremos da tela. Nesse caso, ela
+			/*primeiro verificamos se a peca ja 								esta nos extremos da tela. Nesse caso, ela
 								nao pode mover*/
 			if(direcao==1){/*dependendo da direcao desejada do movimento, checaremos se ha parte de outra peca do lado adequado*/
+				if(x==23) return 1;
 				for(i=0;i<Tamanho;i++){
 					if((*tela).matriz_gui[y+i][x+1].ocupado==1){/*aqui checamos se ha parte de outra peca ao lado da peca ativa. a flag sera usada para sair da funcao caso isso seja verdade*/
 						flag=1;
@@ -143,10 +145,11 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y+i][x].caracter='X';
 				}
-				return 0;
+				return 5;
 			}
 
 			if(direcao==-1){
+				if(x==1) return 1;
 				for(i=0;i<Tamanho;i++){
 					if((*tela).matriz_gui[y+i][x-1].ocupado==1){
 						flag=1;
@@ -161,26 +164,26 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y+i][x].caracter='X';
 				}
-				return 0;
+				return 5;
 			}
 		return 3;/*nesse ponto, se a funcao nao terminou, alguma coisa deu errado*/
 		}
 		if((*a).orientacao==1){
-			if(x==0 || x+Tamanho==24) return 4;
-						
 			if(direcao==1){
-			if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
-			for(i=0;i<Tamanho;i++){
-				(*tela).matriz_gui[y][x+i].caracter=' ';
-			}
-			((*a).posicao_x)++;
-			x=((*a).posicao_x);
-			for(i=0;i<Tamanho;i++){
-				(*tela).matriz_gui[y][x+i].caracter='X';
-			}
-			return 0;
+				if(x+Tamanho==24) return 4;
+				if((*tela).matriz_gui[y][x+Tamanho].ocupado==1) return 5;/*com pecas horizontais, so precisamos checar 2 posicoes*/
+				for(i=0;i<Tamanho;i++){
+					(*tela).matriz_gui[y][x+i].caracter=' ';
+				}
+				((*a).posicao_x)++;
+				x=((*a).posicao_x);
+				for(i=0;i<Tamanho;i++){
+					(*tela).matriz_gui[y][x+i].caracter='X';
+				}
+				return 5;
 			}
 			if(direcao==-1){
+				if(x==1) return 4;
 				if((*tela).matriz_gui[y][x-1].ocupado==1) return 6;
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter=' ';
@@ -190,7 +193,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				for(i=0;i<Tamanho;i++){
 					(*tela).matriz_gui[y][x+i].caracter='X';
 				}
-				return 0;	
+				return 5;	
 			}
 			return 6;
 		}
@@ -201,8 +204,8 @@ return 8;
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,i,flag=0;
 	if((*a).orientacao==0){
-		if(y+Tamanho==14) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
-		if((*tela).matriz_gui[y+Tamanho+1][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
+		if(y+Tamanho==15) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
+		if((*tela).matriz_gui[y+Tamanho][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
 		for(i=0;i<Tamanho;i++){
 			(*tela).matriz_gui[y+i][x].caracter=' ';
 		}
@@ -257,13 +260,13 @@ void fixa_peca(Tela* tela, peca* tetromino){
   y = tetromino->posicao_y;
   
   for(i=0; i<tetromino->tamanho; i++){
-    if(tetromino->orientacao == 0){
-		tela->matriz_gui[x][y+i].ocupado = 1;
-    	tela->matriz_gui[x][y+i].caracter = 'X';  
-	}
     if(tetromino->orientacao == 1){
-		tela->matriz_gui[x+i][y].ocupado = 1;
-    	tela->matriz_gui[x+i][y].caracter = 'X';  
+		tela->matriz_gui[y][x+i].ocupado = 1;
+    	tela->matriz_gui[y][x+i].caracter = 'X';  
+	}
+    if(tetromino->orientacao == 0){
+		tela->matriz_gui[y+i][x].ocupado = 1;
+    	tela->matriz_gui[y+i][x].caracter = 'X';  
   	}
   }
   free(tetromino);
@@ -271,12 +274,12 @@ void fixa_peca(Tela* tela, peca* tetromino){
 
 void deleta_linha(Tela* tela, int linha){
   int i, cont, cont2;
-  for (i=1; i<25; i++){
+  for (i=1; i<15; i++){
     tela->matriz_gui[i][linha].ocupado = 0;
     tela->matriz_gui[i][linha].caracter = ' ';
   }
   for(cont = linha; cont > 0; cont--){
-    for(cont2=1; cont2 < 25; cont2++){
+    for(cont2=1; cont2 < 15; cont2++){
       tela->matriz_gui[cont2][cont].caracter = tela->matriz_gui[cont2-1][cont].caracter; 
       tela->matriz_gui[cont2][cont].ocupado = tela->matriz_gui[cont2-1][cont].ocupado; 
     }  
@@ -285,8 +288,11 @@ void deleta_linha(Tela* tela, int linha){
 
 int movimento(Tela* tela, int* pontuacao){
   
-	int locked, resultado, retorno, cont, cont2, fechou=0;
+	int locked, resultado, cont, cont2, fechou=0;
 	peca* tetromino = nova_peca(tela);
+
+	if(tetromino == NULL)
+		return 1;
 
   	mostra_tela(tela);
 
@@ -294,10 +300,10 @@ int movimento(Tela* tela, int* pontuacao){
 	while(locked == 0) {
 		switch(getch()) {
 			case KEY_LEFT:
-				retorno = move_peca_x(tela, tetromino, -1);
+				move_peca_x(tela, tetromino, -1);
 				break;
 			case KEY_RIGHT:
-				retorno = move_peca_x(tela, tetromino, 1);
+				move_peca_x(tela, tetromino, 1);
 				break;
 			case KEY_DOWN:
 				resultado = move_peca_y(tela, tetromino);
@@ -315,10 +321,10 @@ int movimento(Tela* tela, int* pontuacao){
     }
   }
   
-  for(cont = 1; cont < 15; cont++){
+  for(cont = 1; cont < 13; cont++){
     fechou = 0;
-    for(cont2=1; cont2 < 25; cont2++){
-    	if(tela->matriz_gui[cont2][cont].caracter == 'X')
+    for(cont2=1; cont2 < 23; cont2++){
+    	if(tela->matriz_gui[cont][cont2].caracter == 'X')
       	fechou++;
   	}
     if(fechou == 23){
