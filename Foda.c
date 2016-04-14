@@ -59,10 +59,8 @@ Tela* cria_tela(void){
 
 int mostra_tela(Tela* t){
 	int i, j;
-	WINDOW* janela;
-
+	WINDOW* janela = cria_nova_janela(18,27,0,0);
 	refresh();
-	janela = cria_nova_janela(18,27,0,0);
 
 	for(i = 0; i<15; i++){
 		for(j = 0; j<25; j++){
@@ -100,6 +98,7 @@ int mostra_tela_final(int pont){
 	free(t);
 	return 0;
 }
+
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
@@ -200,7 +199,6 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 return 8;
 }
 
-
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,i,flag=0;
 	if((*a).orientacao==0){
@@ -273,15 +271,15 @@ void fixa_peca(Tela* tela, peca* tetromino){
 }
 
 void deleta_linha(Tela* tela, int linha){
-  int i, cont, cont2;
-  for (i=1; i<15; i++){
+  int i, vert, hori;
+  for (i=0; i<25; i++){
     tela->matriz_gui[i][linha].ocupado = 0;
-    tela->matriz_gui[i][linha].caracter = ' ';
+    tela->matriz_gui[i][linha].caracter = 32;
   }
-  for(cont = linha; cont > 0; cont--){
-    for(cont2=1; cont2 < 15; cont2++){
-      tela->matriz_gui[cont2][cont].caracter = tela->matriz_gui[cont2-1][cont].caracter; 
-      tela->matriz_gui[cont2][cont].ocupado = tela->matriz_gui[cont2-1][cont].ocupado; 
+  for(vert = linha; vert > 0; vert--){
+    for(hori=0; hori < 25; hori++){
+      tela->matriz_gui[hori][vert].caracter = tela->matriz_gui[hori][vert-1].caracter; 
+      tela->matriz_gui[hori][vert].ocupado = tela->matriz_gui[hori][vert-1].ocupado; 
     }  
   }
 }
@@ -312,26 +310,26 @@ int movimento(Tela* tela, int* pontuacao){
       			return 1;
       			break;
 		}
-    mostra_tela(tela);
-    refresh();
- 
-    if (resultado < 5){
-      fixa_peca(tela, tetromino);
-      locked = 1;
-    }
-  }
+		mostra_tela(tela);
+		refresh();
+
+		if (resultado < 5){
+			fixa_peca(tela, tetromino);
+			locked = 1;
+		}
+	}
   
-  for(cont = 1; cont < 13; cont++){
-    fechou = 0;
-    for(cont2=1; cont2 < 23; cont2++){
-    	if(tela->matriz_gui[cont][cont2].caracter == 'X')
-      	fechou++;
+  	for(cont = 0; cont < 15; cont++){
+	    fechou = 0;
+	    for(cont2=0; cont2 < 25; cont2++){
+	    	if(tela->matriz_gui[cont][cont2].caracter == 'X')
+	      	fechou++;
+  		}
+    	if(fechou == 23){
+    		pontuacao += 1; 
+    		deleta_linha(tela, cont);
+    	}
   	}
-    if(fechou == 23){
-    	pontuacao += 1; 
-    	deleta_linha(tela, cont);
-    }
-  }
     
   return 0;
 }
