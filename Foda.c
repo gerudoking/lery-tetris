@@ -3,23 +3,23 @@
 #include <ncurses.h>
 
 struct tipomatriz{
-int ocupado;
-int pardecor;
-char caracter;
+	int ocupado;
+	int pardecor;
+	char caracter;
 };
 typedef struct tipomatriz Tipomatriz;
 
 struct tela{
-Tipomatriz matriz_gui[15][25];
+	Tipomatriz matriz_gui[15][25];
 };
 typedef struct tela Tela;
 
 typedef struct peca{
-int posicao_x; 
-int posicao_y;
-int tamanho;
-int orientacao;
-int cor;
+	int posicao_x; 
+	int posicao_y;
+	int tamanho;
+	int orientacao;
+	int cor;
 }peca;
 
 WINDOW* cria_nova_janela(int alt, int larg, int starty, int startx){
@@ -196,7 +196,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 			}
 			return 6;
 		}
-return 8;
+	return 8;
 }
 
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
@@ -273,13 +273,13 @@ void fixa_peca(Tela* tela, peca* tetromino){
 void deleta_linha(Tela* tela, int linha){
   int i, vert, hori;
   for (i=0; i<25; i++){
-    tela->matriz_gui[i][linha].ocupado = 0;
-    tela->matriz_gui[i][linha].caracter = 32;
+    tela->matriz_gui[linha][i].ocupado = 0;
+    tela->matriz_gui[linha][i].caracter = 32;
   }
   for(vert = linha; vert > 0; vert--){
     for(hori=0; hori < 25; hori++){
-      tela->matriz_gui[hori][vert].caracter = tela->matriz_gui[hori][vert-1].caracter; 
-      tela->matriz_gui[hori][vert].ocupado = tela->matriz_gui[hori][vert-1].ocupado; 
+      tela->matriz_gui[vert][hori].caracter = tela->matriz_gui[vert-1][hori].caracter; 
+      tela->matriz_gui[vert][hori].ocupado = tela->matriz_gui[vert-1][hori].ocupado; 
     }  
   }
 }
@@ -309,6 +309,8 @@ int movimento(Tela* tela, int* pontuacao){
 			case 'q':  // 'q' de "Quit"
       			return 1;
       			break;
+      		default:
+      			break;
 		}
 		mostra_tela(tela);
 		refresh();
@@ -336,10 +338,10 @@ int movimento(Tela* tela, int* pontuacao){
 
 int main(){
 
-srand(time(NULL));
+	srand(time(NULL));
 
-int end = 0;
-int pontuacao = 0;
+	int end = 0;
+	int pontuacao = 0;
 	
 	inicia_ncurses();
 
@@ -351,7 +353,7 @@ int pontuacao = 0;
 	while(end == 0){
   	
   		mostra_tela(t);
-  		getch();
+  		//getch();
 		end = movimento(t, &pontuacao);
 	}
 
@@ -361,5 +363,5 @@ int pontuacao = 0;
 	free(t);
 	finaliza_ncurses();
 
-return 0;
+	return 0;
 }
