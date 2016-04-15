@@ -1,16 +1,16 @@
 all: programa
 
-programa: main.o tela.o pecas.o engine.o
-	gcc main.o tela.o pecas.o engine.o -o tetris -lncurses
+programa: main.o Tela.o Pecas.o Engine.o
+	gcc main.o Tela.o Pecas.o Engine.o -o tetris -lncurses
 
 main.o: main.c Tela.c Pecas.c Engine.c
 	gcc -c main.c
 
-tela.o: Tela.c Tela.h
-	gcc -c Tela.c -o tela
+Tela.o: Tela.c Tela.h
+	gcc -c Tela.c
 
-pecas.o: Pecas.c Pecas.h
-	gcc -c Pecas.c -o pecas
+Pecas.o: Pecas.c Pecas.h
+	gcc -c Pecas.c
 
-engine.o: Engine.c Engine.h
-	gcc -c Engine.c -o engine
+Engine.o: Engine.c Engine.h
+	gcc -c Engine.c
