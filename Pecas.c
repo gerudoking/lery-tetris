@@ -9,7 +9,7 @@ peca* nova_peca(Tela* tela){
 	a=(peca*)malloc(sizeof(peca));
 	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para a peca*/
 	(*a).orientacao=rand() %2;/*Define a orientação: 0 e vertical, 1 e horizontal*/
-	(*a).cor=rand() %3;
+	(*a).cor=rand() %3 + 1;
 	(*a).posicao_x=13;
 	(*a).posicao_y=1;
 		if((*a).orientacao==0){
