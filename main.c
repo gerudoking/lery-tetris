@@ -19,7 +19,6 @@ int main(){
 	while(end == 0){
   	
   		mostra_tela(t);
-  		//getch();
 		end = movimento(t, &pontuacao);
 	}
 
@@ -31,4 +30,3 @@ int main(){
 
 	return 0;
 }
-
