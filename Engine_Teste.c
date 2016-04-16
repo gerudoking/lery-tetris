@@ -11,11 +11,9 @@
 
 
 void adicionar_suite(void);
-
 void fixa_peca(Tela* tela, peca* tetromino);
 void deleta_linha(Tela* tela, int linha);
 
-// 
 void teste_fixa_peca(void){
 	int x, y;
 	Tela* tela = cria_tela();
@@ -27,7 +25,6 @@ void teste_fixa_peca(void){
 	CU_ASSERT_TRUE( (tela->matriz_gui[x][y].ocupado == 1) && (tela->matriz_gui[x][y].caracter == 'X') );
 }
 
-// 
 void teste_deleta_linha(void){
 	int i, j;
 	Tela* tela = cria_tela();
