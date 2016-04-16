@@ -3,7 +3,9 @@
 #include "Tela.c"
 #include "Pecas.c"
 #include "Engine.h"
+
 void inicia_ncurses(){
+	
 	initscr();
 	keypad(stdscr, TRUE);
  	start_color();
@@ -24,11 +26,11 @@ void fixa_peca(Tela* tela, peca* tetromino){
   
   for(i=0; i<tetromino->tamanho; i++){
     if(tetromino->orientacao == 1){
-		tela->matriz_gui[y][x+i].ocupado = 1;
+	tela->matriz_gui[y][x+i].ocupado = 1;
     	tela->matriz_gui[y][x+i].caracter = 'X';  
 	}
     if(tetromino->orientacao == 0){
-		tela->matriz_gui[y+i][x].ocupado = 1;
+	tela->matriz_gui[y+i][x].ocupado = 1;
     	tela->matriz_gui[y+i][x].caracter = 'X';  
   	}
   }
@@ -36,15 +38,15 @@ void fixa_peca(Tela* tela, peca* tetromino){
 }
 
 void deleta_linha(Tela* tela, int linha){
-  int i, cont, cont2;
-  for (i=1; i<25; i++){
-    tela->matriz_gui[i][linha].ocupado = 0;
-    tela->matriz_gui[i][linha].caracter = ' ';
+  int i, vert, hori;
+  for (i=0; i<25; i++){
+    tela->matriz_gui[linha][i].ocupado = 0;
+    tela->matriz_gui[linha][i].caracter = 32;
   }
-  for(cont = linha; cont > 0; cont--){
-    for(cont2=1; cont2 < 25; cont2++){
-      tela->matriz_gui[cont2][cont].caracter = tela->matriz_gui[cont2-1][cont].caracter; 
-      tela->matriz_gui[cont2][cont].ocupado = tela->matriz_gui[cont2-1][cont].ocupado; 
+  for(vert = linha; vert > 0; vert--){
+    for(hori=0; hori < 25; hori++){
+      tela->matriz_gui[vert][hori].caracter = tela->matriz_gui[vert-1][hori].caracter; 
+      tela->matriz_gui[vert][hori].ocupado = tela->matriz_gui[vert-1][hori].ocupado; 
     }  
   }
 }
@@ -53,6 +55,9 @@ int movimento(Tela* tela, int* pontuacao){
   
 	int locked, resultado, cont, cont2, fechou=0;
 	peca* tetromino = nova_peca(tela);
+
+	if(tetromino == NULL)
+		return 1;
 
   	mostra_tela(tela);
 
@@ -71,27 +76,29 @@ int movimento(Tela* tela, int* pontuacao){
 			case 'q':  // 'q' de "Quit"
       			return 1;
       			break;
+      		default:
+      			break;
 		}
-    mostra_tela(tela);
-    refresh();
- 
-    if (resultado < 5){
-      fixa_peca(tela, tetromino);
-      locked = 1;
-    }
-  }
+		mostra_tela(tela);
+		refresh();
+
+		if (resultado < 5){
+			fixa_peca(tela, tetromino);
+			locked = 1;
+		}
+	}
   
-  for(cont = 1; cont < 15; cont++){
-    fechou = 0;
-    for(cont2=1; cont2 < 25; cont2++){
-    	if(tela->matriz_gui[cont2][cont].caracter == 'X')
-      	fechou++;
+  	for(cont = 0; cont < 15; cont++){
+	    fechou = 0;
+	    for(cont2=0; cont2 < 25; cont2++){
+	    	if(tela->matriz_gui[cont][cont2].caracter == 'X')
+	      	fechou++;
+  		}
+    	if(fechou == 23){
+    		pontuacao += 1; 
+    		deleta_linha(tela, cont);
+    	}
   	}
-    if(fechou == 23){
-    	pontuacao += 1; 
-    	deleta_linha(tela, cont);
-    }
-  }
     
   return 0;
 }
