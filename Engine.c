@@ -95,7 +95,7 @@ int movimento(Tela* tela, int* pontuacao){
 	      	fechou++;
   		}
     	if(fechou == 23){
-    		pontuacao += 1; 
+    		*pontuacao += 1; 
     		deleta_linha(tela, cont);
     	}
   	}
