@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <ncurses.h>
-#include "Tela.c"
-#include "Pecas.c"
-#include "Engine.h"
+#include "Pecas.h"
 
 void inicia_ncurses(){
 	
