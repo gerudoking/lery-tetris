@@ -79,38 +79,4 @@ int mostra_tela_final(int pont){
 	return 0;
 }
 
-//Main para teste do módulo. Seems perfect so far.
 
-/*int main(){
-	Tela* t;
-	initscr();
-	start_color();
-
-	init_pair(1, COLOR_RED, COLOR_BLACK);//Trataremos o 1 como a cor vermelha nos caracteres
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);//E o 2 como azul
-	init_pair(3, COLOR_GREEN, COLOR_BLACK);//por sua vez o 3 como verde
-	
-	t = cria_tela();
-
-	mostra_tela_inicial();
-	getch();
-
-	t = cria_tela();
-
-	mostra_tela(t);
-	getch();
-
-	(*t).matriz_gui[5][6].ocupado = 1;
-	(*t).matriz_gui[5][6].caracter = 'X';
-	
-	mostra_tela(t);
-	getch();
-
-	t = cria_tela();
-
-	mostra_tela_final(100);
-	getch();
-
-	endwin();
-	return 0;
-}*/
