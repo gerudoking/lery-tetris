@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Pecas.h"
-#include "Tela.h"
+
 peca* nova_peca(Tela* tela){
 	int i;
 	peca* a;
@@ -108,7 +108,13 @@ return 8;
 
 
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
-	int x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,i,flag=0,(*a).cor=cor;
+	int x=(*a).posicao_x;
+	int y=(*a).posicao_y;
+	int Tamanho=(*a).tamanho;
+	int i;
+	int flag=0;
+	int cor= (*a).cor;
+	
 	if((*a).orientacao==0){
 		if(y+Tamanho==15) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
 		if((*tela).matriz_gui[y+Tamanho][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
