@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include "Placar.h"
+#include "Ordenacao.h"
 
 void cria_placar(void){
   FILE* arq;
@@ -35,7 +36,7 @@ void atualiza_placar(int pontuacao){
   fclose(arq);
   arq = fopen("placar.txt", "w+");
   
-  ordena(arq);
+  //ordena(arq);
   
   fclose(arq);
 }
