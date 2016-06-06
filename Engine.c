@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include "Pecas.h"
+#include <unistd.h>
+#include <poll.h>
 
 void inicia_ncurses(){
 	
@@ -51,8 +53,9 @@ void deleta_linha(Tela* tela, int linha){
 
 int movimento(Tela* tela, int* pontuacao){
   
-	int locked, resultado, cont, cont2, fechou=0;
+	int locked, resultado, cont, cont2, fechou = 0, gravidade = 1; // gravidade é o número de células que a peça cai a cada segundo.
 	peca* tetromino = nova_peca(tela);
+	struct pollfd poll1 = { STDIN_FILENO, POLLIN|POLLPRI };
 
 	if(tetromino == NULL)
 		return 1;
@@ -61,29 +64,35 @@ int movimento(Tela* tela, int* pontuacao){
 
 	locked = 0;
 	while(locked == 0) {
-		switch(getch()) {
-			case KEY_LEFT:
-				move_peca_x(tela, tetromino, -1);
+		if(poll(&poll1, 1, (1000/gravidade))) {
+			switch(getch()) {
+				case KEY_LEFT:
+					move_peca_x(tela, tetromino, -1);
+					break;
+				case KEY_RIGHT:
+					move_peca_x(tela, tetromino, 1);
+					break;
+				case KEY_DOWN:
+					gravidade = gravidade*2;
+					break;
+				case 'q':  // 'q' de "Quit"
+	      			return 1;
+	      			break;
+	      		default:
+	      			break;
+			}
+		}
+		else {
+			resultado = move_peca_y(tela, tetromino);
+			if (resultado < 5){
+				fixa_peca(tela, tetromino);
+				locked = 1;
 				break;
-			case KEY_RIGHT:
-				move_peca_x(tela, tetromino, 1);
-				break;
-			case KEY_DOWN:
-				resultado = move_peca_y(tela, tetromino);
-				break;
-			case 'q':  // 'q' de "Quit"
-      			return 1;
-      			break;
-      		default:
-      			break;
+				
+			}
 		}
 		mostra_tela(tela);
-		refresh();
-
-		if (resultado < 5){
-			fixa_peca(tela, tetromino);
-			locked = 1;
-		}
+		refresh();	
 	}
   
   	for(cont = 0; cont < 15; cont++){
