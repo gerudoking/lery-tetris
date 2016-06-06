@@ -12,7 +12,8 @@ peca* nova_peca(Tela* tela){
 	(*a).cor=rand() %3 + 1;
 	(*a).posicao_x=10;
 	(*a).posicao_y=4;
-	switch((*a).tipo){
+	switch((*a).tipo){/*aqui implementamos o formato da peca em em seu vetor formato, que e uma matriz 7x7 que 
+	guarda justamente o formato da peca*/
 		case 0:
 			for(i=0;i<(*a).tamanho;i++){
 				(*a).formato[i][3].caracter='X';
@@ -68,7 +69,10 @@ peca* nova_peca(Tela* tela){
 int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que vai ser ou -1 ou 1, para mostrar se e para mover para a esquerda ou direita, respectivamente*/
 	int i,j,flag=0,x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,cor=(*a).cor;
 		x+=direcao;
-		for(i=0;i<7;i++){
+		for(i=0;i<7;i++){/*esta funcao compara um a um cada parte da matriz formato da peca com um espaco na matriz 
+		da tela, usando o ponto de referencia acusado pelas coordenadas x e y, sendo que o x e alterado pela direcao
+		escolhida pelo jogador. Se uma parte da peca coincidir com algo na matriz da tela, o movimento e parado. 
+		Senao, o ponto de referencia e alterado usando a direcao*/
 			for(j=0;j<7;j++){
 				if((*a).formato[i][j]=='X' && tela.matriz_gui[y+i][x+j].ocupado==1) return 1;
 			}
