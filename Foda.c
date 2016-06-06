@@ -299,7 +299,7 @@ int movimento(Tela* tela, int* pontuacao){
 
 	locked = 0;
 	while(locked == 0) {
-		if(poll(&poll1, 1, 500)) {
+		if(poll(&poll1, 1, (1000/gravidade))) {
 			switch(getch()) {
 				case KEY_LEFT:
 					move_peca_x(tela, tetromino, -1);
@@ -318,13 +318,12 @@ int movimento(Tela* tela, int* pontuacao){
 			}
 		}
 		else {
-			for(cont = 0; cont < gravidade; cont++){
-				resultado = move_peca_y(tela, tetromino);
-				if (resultado < 5){
-					fixa_peca(tela, tetromino);
-					locked = 1;
-					break;
-				}
+			resultado = move_peca_y(tela, tetromino);
+			if (resultado < 5){
+				fixa_peca(tela, tetromino);
+				locked = 1;
+				break;
+				
 			}
 		}
 		mostra_tela(tela);
