@@ -3,6 +3,7 @@
 typedef struct peca{
 int posicao_x, posicao_y,tamanho,orientacao,cor;
 char* simbolo;
+char formato[5][5];
 }peca;
 
 peca* nova_peca(Tela* tela);
