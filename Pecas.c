@@ -12,8 +12,7 @@ peca* nova_peca(Tela* tela){
 	(*a).cor=rand() %3 + 1;
 	(*a).posicao_x=10;
 	(*a).posicao_y=4;
-	switch((*a).tipo){/*aqui implementamos o formato da peca em em seu vetor formato, que e uma matriz 7x7 que 
-	guarda justamente o formato da peca*/
+	switch((*a).tipo){
 		case 0:
 			for(i=0;i<(*a).tamanho;i++){
 				(*a).formato[i][3].caracter='X';
@@ -67,18 +66,28 @@ peca* nova_peca(Tela* tela){
 }
 
 int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que vai ser ou -1 ou 1, para mostrar se e para mover para a esquerda ou direita, respectivamente*/
-	int i,j,flag=0,x=(*a).posicao_x,y=(*a).posicao_y,Tamanho=(*a).tamanho,cor=(*a).cor;
-		x+=direcao;
-		for(i=0;i<7;i++){/*esta funcao compara um a um cada parte da matriz formato da peca com um espaco na matriz 
-		da tela, usando o ponto de referencia acusado pelas coordenadas x e y, sendo que o x e alterado pela direcao
-		escolhida pelo jogador. Se uma parte da peca coincidir com algo na matriz da tela, o movimento e parado. 
-		Senao, o ponto de referencia e alterado usando a direcao*/
-			for(j=0;j<7;j++){
-				if((*a).formato[i][j]=='X' && tela.matriz_gui[y+i][x+j].ocupado==1) return 1;
+	int i,j;,
+	int x=(*a).posicao_x;
+	int y=(*a).posicao_y;
+	int Tamanho=(*a).tamanho;
+	int cor=(*a).cor;
+	x+=direcao;
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) return 1;
+			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].character=' ';
+		}
+	}
+	(*a).posicao_x+=direcao;
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X') {
+				tela.matriz_gui[y+i][x+j].character='X';
+				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
 			}
 		}
-		(*a).posicao_x+=direcao;;
-			
+	}
+	return 0;	
 }
 
 
@@ -86,46 +95,24 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	int x=(*a).posicao_x;
 	int y=(*a).posicao_y;
 	int Tamanho=(*a).tamanho;
-	int i;
-	int flag=0;
+	int i,j;
 	int cor= (*a).cor;
 	
-	if((*a).tipo==0){
-		if(y+Tamanho==15) return 1; /*Caso a peca ja esteja no fim da tela, ela nao pode mover*/
-		if((*tela).matriz_gui[y+Tamanho][x].ocupado==1) return 2; /*Caso exista parte de uma peca embaixo da peca, ela deve parar*/
-		for(i=0;i<Tamanho;i++){
-			(*tela).matriz_gui[y+i][x].caracter=' ';
+	y++;
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) return 1;
+			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].character=' ';
 		}
-		((*a).posicao_y)+=1;
-		y=((*a).posicao_y);
-		for(i=0;i<Tamanho;i++){
-			(*tela).matriz_gui[y+i][x].caracter='X';
-			(*tela).matriz_gui[y+i][x].pardecor=cor;
-		}
-	return 5;
 	}
-	
-	if((*a).tipo==1){
-		if(y==14) return 3;/*teste de encontro com borda da tela*/
-		
-		for(i=0;i<Tamanho;i++){
-			if((*tela).matriz_gui[y+1][x+i].ocupado==1){
-				flag=1;
-				i=Tamanho;
+	(*a).posicao_x+=direcao;
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X') {
+				tela.matriz_gui[y+i][x+j].character='X';
+				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
 			}
 		}
-		if(flag==1) return 4;
-		for(i=0;i<Tamanho;i++){
-			(*tela).matriz_gui[y][x+i].caracter=' ';
-		}
-		((*a).posicao_y)+=1;
-		y=((*a).posicao_y);
-		for(i=0;i<Tamanho;i++){
-			(*tela).matriz_gui[y][x+i].caracter='X';
-			(*tela).matriz_gui[y][x+i].pardecor=cor;
-		}
-		return 5;
-
 	}
-	return 6;
+	return 0;
 }
