@@ -116,3 +116,28 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	}
 	return 0;
 }
+peca* rotaciona_peca(peca* a,Tela* tela){
+	int i,j;
+	char compara[7][7];
+	int x=(*a).posicao_x;
+	int y=(*a).posicao_y;
+	
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			compara[j][i]=(*a).formato[i][j];
+		}	
+	}
+	
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if(compara[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) return 1;
+		}
+	}
+	
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			(*a).formato[i][j]=compara[i][j];
+		}
+	}
+	return 0;
+}
