@@ -83,7 +83,7 @@ int mostra_tela_final(int pont){
 }
 
 peca* nova_peca(Tela* tela){
-	int i;
+	int i,j;
 	peca* a;
 	if((*tela).matriz_gui[1][13].ocupado==1) return NULL;
 	a=(peca*)malloc(sizeof(peca));
@@ -95,13 +95,13 @@ peca* nova_peca(Tela* tela){
 	switch((*a).tipo){
 		case 0:
 			for(i=0;i<(*a).tamanho;i++){
-				(*a).formato[i][3].caracter='X';
+				(*a).formato[i][3]='X';
 			}
 		break;
 		
 		case 1:
 			for(i=0;i<(*a).tamanho;i++){
-				(*a).formato[3][i].caracter='X';
+				(*a).formato[3][i]='X';
 			}
 		break;
 
@@ -146,23 +146,22 @@ peca* nova_peca(Tela* tela){
 }
 
 int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que vai ser ou -1 ou 1, para mostrar se e para mover para a esquerda ou direita, respectivamente*/
-	int i,j;,
+	int i,j;
 	int x=(*a).posicao_x;
 	int y=(*a).posicao_y;
-	int Tamanho=(*a).tamanho;
 	int cor=(*a).cor;
 	x+=direcao;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) return 1;
-			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].character=' ';
+			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].caracter=' ';
 		}
 	}
 	(*a).posicao_x+=direcao;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X') {
-				tela.matriz_gui[y+i][x+j].character='X';
+				(*tela).matriz_gui[y+i][x+j].caracter='X';
 				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
 			}
 		}
@@ -174,7 +173,6 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x;
 	int y=(*a).posicao_y;
-	int Tamanho=(*a).tamanho;
 	int i,j;
 	int cor= (*a).cor;
 	
@@ -182,14 +180,14 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) return 1;
-			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].character=' ';
+			else if((*a).formato[i][j]=='X') (*tela).matriz_gui[y+i][x+j].caracter=' ';
 		}
 	}
-	(*a).posicao_x+=direcao;
+
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X') {
-				tela.matriz_gui[y+i][x+j].character='X';
+				(*tela).matriz_gui[y+i][x+j].caracter='X';
 				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
 			}
 		}
