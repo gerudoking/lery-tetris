@@ -1,7 +1,7 @@
 #include "Tela.h"
 
 typedef struct peca{
-int posicao_x, posicao_y,tamanho,orientacao,cor;
+int posicao_x, posicao_y,tamanho,orientacao,cor,tipo;
 char* simbolo;
 char formato[7][7];
 }peca;
