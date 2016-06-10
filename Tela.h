@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include "Placar.h"
 
 struct tipomatriz{
 int ocupado;
