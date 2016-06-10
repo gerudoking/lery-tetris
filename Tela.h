@@ -24,3 +24,5 @@ int mostra_tela(Tela* t);//Mudei o retorno de void para int para poder fazer os 
 int mostra_tela_inicial();
 
 int mostra_tela_final(int pont);
+
+int mostra_tela_placar(int pont);
