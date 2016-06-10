@@ -79,4 +79,16 @@ int mostra_tela_final(int pont){
 	return 0;
 }
 
+int mostra_tela_placar(int pont){
+	Tela* t = cria_tela();
+	mostra_tela(t);
 
+	cria_placar();
+	atualiza_placar(pont);
+	
+	mostra_tela(t);
+	mostra_placar();
+
+	free(t);
+	return 0;
+}
