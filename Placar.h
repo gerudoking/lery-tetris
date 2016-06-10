@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ncurses.h>
+
 #define MAX_PLACAR 5
 
 struct tipojogador{
