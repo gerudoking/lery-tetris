@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ncurses.h>
 #include "Placar.h"
 
 void cria_placar(void){
