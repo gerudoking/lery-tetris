@@ -91,7 +91,7 @@ peca* nova_peca(Tela* tela){
 	(*a).tipo=rand() %6;/*Define o tipo de peca: 0 e vertical, 1 e horizontal, 2 e Z, 3 e quadrado, 4 e L, 5 e T*/
 	(*a).cor=rand() %3 + 1;
 	(*a).posicao_x=8;
-	(*a).posicao_y=2;
+	(*a).posicao_y=0;
 	switch((*a).tipo){
 		case 0:
 			for(i=0;i<(*a).tamanho;i++){
@@ -174,7 +174,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				}
 			}
 		}
-	return 1;
+	return 8;
 	}
 	(*a).posicao_x+=direcao;/*se nao houver problema, a coordenada x da peca e alterada, e a peca e escrita em sua nova posicao*/
 	for(i=0;i<7;i++){
@@ -231,7 +231,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 			}
 		}
 	}
-	return 0;
+	return 8;
 }
 peca* rotaciona_peca(peca* a,Tela* tela){
 	int i,j;
