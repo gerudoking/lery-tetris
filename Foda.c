@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <poll.h>
 #include "Pecas.h"
-#include "Placar.h"
 
 WINDOW* cria_nova_janela(int alt, int larg, int starty, int startx){
 	WINDOW* janela_local;
