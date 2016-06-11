@@ -2,10 +2,15 @@
 
 void cria_placar(void){
   FILE* arq;
+  int i;
   
   arq = fopen("placar.txt", "r");
-  if (arq == NULL)
+  if (arq == NULL){
     arq = fopen("placar.txt", "w");
+    
+    for(i = 0; i < 5; i++)
+    	fprintf(arq, "AAAAA     0\n");
+  }
   
   fclose(arq);
 }
