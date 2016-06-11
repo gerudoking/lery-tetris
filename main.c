@@ -23,6 +23,9 @@ int main(){
 
 	mostra_tela_final(pontuacao*100);
 	getch();
+	
+	mostra_tela_placar(pontuacao*100);
+	getch();
 
 	free(t);
 	finaliza_ncurses();
