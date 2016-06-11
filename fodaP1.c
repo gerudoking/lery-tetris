@@ -413,7 +413,7 @@ void mostra_placar(void){
   for(i = 0; i < MAX_PLACAR; i++){
     fread(vetor, sizeof(char), 12, arq);
 		vetor[12] = '\0';
-		mvprintw(1*i, 2, "%s", vetor);
+		mvprintw(2+(1*i), 2, "%s", vetor);
   }
   
   fclose(arq);
