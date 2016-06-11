@@ -153,15 +153,15 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	for(i=0;i<7;i++){/*primeiro, limpamos a peca da tela. Isso evita que seja confundida com outras pecas*/
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+i][x+j].ocupado=0;
-				(*tela).matriz_gui[y+i][x+j].caracter=' ';
+				(*tela).matriz_gui[y+j][x+i].ocupado=0;
+				(*tela).matriz_gui[y+j][x+i].caracter=' ';
 			}
 		}
 	}
 	x+=direcao;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){/*agora, usando a matriz formato, vemos se a peca pode ocupar a posicao desejada*/
-			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) flag++;
+			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+j][x+i].ocupado==1) flag++;
 		}
 	}
 	if(flag!=0){/*se for encontrado overlap entre a peca e o resto da tela, a peca e reescrita onde estava, e a funcao para */
@@ -169,8 +169,8 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 		for(i=0;i<7;i++){
 			for(j=0;j<7;j++){
 				if((*a).formato[i][j]=='X'){
-					(*tela).matriz_gui[y+i][x+j].ocupado=1;
-					(*tela).matriz_gui[y+i][x+j].caracter='X';
+					(*tela).matriz_gui[y+j][x+i].ocupado=1;
+					(*tela).matriz_gui[y+j][x+i].caracter='X';
 				}
 			}
 		}
@@ -180,8 +180,8 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X') {
-				(*tela).matriz_gui[y+i][x+j].caracter='X';
-				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
+				(*tela).matriz_gui[y+j][x+i].caracter='X';
+				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
 			}
 		}
 	}
@@ -198,15 +198,15 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+i][x+j].ocupado=0;
-				(*tela).matriz_gui[y+i][x+j].caracter=' ';
+				(*tela).matriz_gui[y+j][x+i].ocupado=0;
+				(*tela).matriz_gui[y+j][x+i].caracter=' ';
 			}
 		}
 	}
 	y++;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) flag++;
+			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+j][x+i].ocupado==1) flag++;
 		}
 	}
 
@@ -215,8 +215,8 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 		for(i=0;i<7;i++){
 			for(j=0;j<7;j++){
 				if((*a).formato[i][j]=='X'){
-					(*tela).matriz_gui[y+i][x+j].ocupado=1;
-					(*tela).matriz_gui[y+i][x+j].caracter='X';
+					(*tela).matriz_gui[y+j][x+i].ocupado=1;
+					(*tela).matriz_gui[y+j][x+i].caracter='X';
 				}
 			}
 		}
@@ -226,8 +226,8 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X') {
-				(*tela).matriz_gui[y+i][x+j].caracter='X';
-				(*tela).matriz_gui[y+i][x+j].pardecor=cor;
+				(*tela).matriz_gui[y+j][x+i].caracter='X';
+				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
 			}
 		}
 	}
