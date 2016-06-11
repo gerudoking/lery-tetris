@@ -6,7 +6,7 @@ programa: main.o Tela.o Pecas.o Engine.o
 main.o: main.c Tela.c Pecas.c Engine.c
 	gcc -c main.c
 
-Tela.o: Tela.c Tela.h
+Tela.o: Tela.c Tela.h Placar.c
 	gcc -c Tela.c
 
 Pecas.o: Pecas.c Pecas.h
@@ -14,3 +14,6 @@ Pecas.o: Pecas.c Pecas.h
 
 Engine.o: Engine.c Engine.h
 	gcc -c Engine.c
+	
+Placar.o: Placar.c Placar.h
+	gcc -c Placar.c
