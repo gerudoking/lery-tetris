@@ -214,4 +214,3 @@ void rotaciona_peca(Tela* tela,peca* a){
 	}
 	
 }
-
