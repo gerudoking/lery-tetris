@@ -11,3 +11,5 @@ peca* nova_peca(Tela* tela);
 int move_peca_x(Tela* tela,peca* a,int direcao);
 
 int move_peca_y(Tela* tela,peca* a);
+
+void rotaciona_peca(Tela* tela,peca* a);
