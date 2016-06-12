@@ -162,7 +162,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){/*agora, usando a matriz formato, vemos se a peca pode ocupar a posicao desejada*/
 			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+j][x+i].ocupado==1) flag++;
-			if((*a).formato[i][j]=='X' && (x==0 || x==20)) flag++;
+			if((*a).formato[i][j]=='X' && (x-i ==(-6) || x+i ==24)) flag++;
 		}
 	}
 	if(flag!=0){/*se for encontrado overlap entre a peca e o resto da tela, a peca e reescrita onde estava, e a funcao para */
@@ -175,7 +175,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				}
 			}
 		}
-	return 8;
+		return 8;
 	}
 	(*a).posicao_x+=direcao;/*se nao houver problema, a coordenada x da peca e alterada, e a peca e escrita em sua nova posicao*/
 	for(i=0;i<7;i++){
@@ -189,7 +189,6 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	}
 	return 0;	
 }
-
 
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x;
@@ -238,6 +237,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	}
 	return 8;
 }
+
 void rotaciona_peca(Tela* tela,peca* a){
 	int i,j,flag=0;
 	char compara[7][7];
@@ -293,7 +293,6 @@ void rotaciona_peca(Tela* tela,peca* a){
 			(*a).formato[i][j]=compara[i][j];
 		}
 	}
-	
 }
 
 void inicia_ncurses(){
@@ -307,25 +306,6 @@ void inicia_ncurses(){
 
 void finaliza_ncurses(){
 	endwin();
-}
-
-void fixa_peca(Tela* tela, peca* tetromino){
-	int x, y, i;
-  
-  x = tetromino->posicao_x;
-  y = tetromino->posicao_y;
-  
-  for(i=0; i<tetromino->tamanho; i++){
-    if(tetromino->orientacao == 1){
-		tela->matriz_gui[y][x+i].ocupado = 1;
-    	tela->matriz_gui[y][x+i].caracter = 'X';  
-	}
-    if(tetromino->orientacao == 0){
-		tela->matriz_gui[y+i][x].ocupado = 1;
-    	tela->matriz_gui[y+i][x].caracter = 'X';  
-  	}
-  }
-  free(tetromino);
 }
 
 void deleta_linha(Tela* tela, int linha){
@@ -367,6 +347,7 @@ int movimento(Tela* tela, int* pontuacao){
 					move_peca_x(tela, tetromino, 1);
 					break;
 				case KEY_DOWN:
+					resultado = move_peca_y(tela, tetromino); //temporario
 					gravidade = gravidade*2;
 					break;
 				case 'q':  // 'q' de "Quit"
@@ -378,12 +359,6 @@ int movimento(Tela* tela, int* pontuacao){
 		}
 		else {
 			resultado = move_peca_y(tela, tetromino);
-			if (resultado < 5){
-				/*fixa_peca(tela, tetromino);*/
-				locked = 1;
-				break;
-				
-			}
 		}
 		mostra_tela(tela);
 		refresh();	
@@ -403,71 +378,6 @@ int movimento(Tela* tela, int* pontuacao){
     
   return 0;
 }
-
-void cria_placar(void){
-  FILE* arq;
-  int i;
-  
-  arq = fopen("placar.txt", "r");
-  if (arq == NULL){
-    arq = fopen("placar.txt", "w");
-    
-    for(i = 0; i < 5; i++)
-    	fprintf(arq, "AAAAA     0\n");
-  }
-  
-  fclose(arq);
-}
-
-void atualiza_placar(int pontuacao){
-  FILE* arq;
-  Jogador j;
-  int i, checador;
-  
-  j.pontos = pontuacao;
-  mvprintw(1, 1, "Digite o seu nome");
-  mvprintw(2, 1, "em ate 5 letras:");
-  mvscanw(3, 1, "%s", j.nome);
-  
-  arq = fopen("placar.txt", "r+");
-  
-  for(i = 0; i < MAX_PLACAR; i++){
-    fseek(arq, sizeof(char)*5, SEEK_CUR);
-    fscanf(arq, "%d", &checador);
-    if(j.pontos > checador){
-      fseek(arq, (sizeof(char))*(-11), SEEK_CUR);
-      
-      fprintf(arq, "%s ", j.nome);
-  
-      //As seguintes checagens garantem que o campo pontos tenha tamanho fixo;
-      if(j.pontos < 100) fprintf(arq, "  ");
-      if(j.pontos < 1000) fprintf(arq, " ");
-      if(j.pontos < 10000) fprintf(arq, " ");
-      fprintf(arq, "%d", j.pontos);
-      
-      break;
-    }
-  }
-  
-  fclose(arq);
-}
-
-void mostra_placar(void){
-  FILE* arq;
-  int i;
-  char vetor[13];
-  
-  arq = fopen("placar.txt", "r");
-  
-  for(i = 0; i < MAX_PLACAR; i++){
-    fread(vetor, sizeof(char), 12, arq);
-		vetor[12] = '\0';
-		mvprintw(2+(1*i), 2, "%s", vetor);
-  }
-  
-  fclose(arq);
-}
-
 
 int main(){
 
