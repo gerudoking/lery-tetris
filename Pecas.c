@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Pecas.h"
+
 peca* nova_peca(Tela* tela){
 	int i,j;
 	peca* a;
@@ -81,7 +82,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){/*agora, usando a matriz formato, vemos se a peca pode ocupar a posicao desejada*/
 			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+j][x+i].ocupado==1) flag++;
-			if((*a).formato[i][j]=='X' && (x==0 || x==20)) flag++;
+			if((*a).formato[i][j]=='X' && (x-i ==(-6) || x+i ==24)) flag++;
 		}
 	}
 	if(flag!=0){/*se for encontrado overlap entre a peca e o resto da tela, a peca e reescrita onde estava, e a funcao para */
@@ -94,7 +95,7 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 				}
 			}
 		}
-	return 8;
+		return 8;
 	}
 	(*a).posicao_x+=direcao;/*se nao houver problema, a coordenada x da peca e alterada, e a peca e escrita em sua nova posicao*/
 	for(i=0;i<7;i++){
@@ -108,7 +109,6 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	}
 	return 0;	
 }
-
 
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x;
@@ -157,6 +157,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	}
 	return 8;
 }
+
 void rotaciona_peca(Tela* tela,peca* a){
 	int i,j,flag=0;
 	char compara[7][7];
@@ -212,5 +213,4 @@ void rotaciona_peca(Tela* tela,peca* a){
 			(*a).formato[i][j]=compara[i][j];
 		}
 	}
-	
 }
