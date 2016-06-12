@@ -5,7 +5,6 @@
 #include <poll.h>
 
 void inicia_ncurses(){
-	
 	initscr();
 	keypad(stdscr, TRUE);
  	start_color();
@@ -16,25 +15,6 @@ void inicia_ncurses(){
 
 void finaliza_ncurses(){
 	endwin();
-}
-
-void fixa_peca(Tela* tela, peca* tetromino){
-	int x, y, i;
-  
-  x = tetromino->posicao_x;
-  y = tetromino->posicao_y;
-  
-  for(i=0; i<tetromino->tamanho; i++){
-    if(tetromino->orientacao == 1){
-	tela->matriz_gui[y][x+i].ocupado = 1;
-    	tela->matriz_gui[y][x+i].caracter = 'X';  
-	}
-    if(tetromino->orientacao == 0){
-	tela->matriz_gui[y+i][x].ocupado = 1;
-    	tela->matriz_gui[y+i][x].caracter = 'X';  
-  	}
-  }
-  free(tetromino);
 }
 
 void deleta_linha(Tela* tela, int linha){
@@ -66,6 +46,9 @@ int movimento(Tela* tela, int* pontuacao){
 	while(locked == 0) {
 		if(poll(&poll1, 1, (1000/gravidade))) {
 			switch(getch()) {
+				case KEY_UP:
+					rotaciona_peca(tela,tetromino);
+					break;
 				case KEY_LEFT:
 					move_peca_x(tela, tetromino, -1);
 					break;
@@ -73,6 +56,7 @@ int movimento(Tela* tela, int* pontuacao){
 					move_peca_x(tela, tetromino, 1);
 					break;
 				case KEY_DOWN:
+					resultado = move_peca_y(tela, tetromino);
 					gravidade = gravidade*2;
 					break;
 				case 'q':  // 'q' de "Quit"
@@ -84,12 +68,6 @@ int movimento(Tela* tela, int* pontuacao){
 		}
 		else {
 			resultado = move_peca_y(tela, tetromino);
-			if (resultado < 5){
-				fixa_peca(tela, tetromino);
-				locked = 1;
-				break;
-				
-			}
 		}
 		mostra_tela(tela);
 		refresh();	
