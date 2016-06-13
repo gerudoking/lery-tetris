@@ -5,7 +5,9 @@
 peca* nova_peca(Tela* tela){
 	int i,j;
 	peca* a;
-	if((*tela).matriz_gui[1][13].ocupado==1) return NULL;
+	for(i=0;i<25;i++){
+		if((*tela).matriz_gui[0][i].ocupado==1) return NULL;
+	}
 	a=(peca*)malloc(sizeof(peca));
 	(*a).tamanho=((rand() %3)+3);/*Escolhe um tamanho entre 3 e 5 para as pecas vertical e horizontal*/
 	(*a).tipo=rand() %6;/*Define o tipo de peca: 0 e vertical, 1 e horizontal, 2 e Z, 3 e quadrado, 4 e L, 5 e T*/
