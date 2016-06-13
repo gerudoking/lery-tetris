@@ -119,7 +119,8 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	int cor=(*a).cor;
 	
 
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*como na move_peca_y, primeiro limpamos a peca de sua posicao atual, para que nao seja confundida
+	com outras pecas*/
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X'){
 				(*tela).matriz_gui[y+j][x+i].ocupado=0;
@@ -128,14 +129,15 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 		}
 	}
 	y++;
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*agora, verificamos se a peca poderia entrar na nova posicao, ou seja, se existe outra peca ocupando
+	alguma posicao que seria ocupada por esta peca*/
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X' && (*tela).matriz_gui[y+j][x+i].ocupado==1) flag++;
 			if((*a).formato[i][j]=='X' && y+j==15) flag++;
 		}
 	}
 
-	if(flag!=0){
+	if(flag!=0){/*se a peca nao puder entrar na posicao desejada, ela e reescrita em sua posicao antiga, e a funcao termina*/
 	y=(*a).posicao_y;
 		for(i=0;i<7;i++){
 			for(j=0;j<7;j++){
@@ -146,7 +148,7 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 			}
 		}
 	return 1;
-	}
+	}/*se a peca puder se mover, sua coordenada y e alterada e ela e reescrita*/
 	(*a).posicao_y=y;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){
@@ -160,20 +162,21 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	return 8;
 }
 
-void rotaciona_peca(Tela* tela,peca* a){
+void rotaciona_peca(Tela* tela,peca* a){/*esta funcao faz a rotacao em 90 graus do formato da peca*/
 	int i,j,flag=0;
 	char compara[7][7];
 	char k;
 	int x=(*a).posicao_x;
 	int y=(*a).posicao_y;
 	
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*primeiramente, copiamos o formato da peca para outra matriz. Isso nos permite checar se a peca pode ser
+	rotacionada, sem alterar a matriz original da peca*/
 		for(j=0;j<7;j++){
 			compara[i][j]=(*a).formato[i][j];
 		}	
 	}
 
-	for(i=0;i<3;i++){
+	for(i=0;i<3;i++){/*aqui e feita a rotacao da peca*/
 		for(j=i;j<7-i-1;j++){
 			k=compara[i][j];
 			compara[i][j]=compara[j][7-1-i];
@@ -183,7 +186,7 @@ void rotaciona_peca(Tela* tela,peca* a){
 		}	
 	}
 	
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*como nas funcoes move, primeiro limpamos o formato antigo da peca da tela*/
 		for(j=0;j<7;j++){
 			if((*a).formato[i][j]=='X'){
 				(*tela).matriz_gui[y+j][x+i].ocupado=0;
@@ -192,13 +195,13 @@ void rotaciona_peca(Tela* tela,peca* a){
 		}
 	}	
 	
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*depois, verificamos se, usando o formato na matriz compara, a nova peca pode ser escrita*/
 		for(j=0;j<7;j++){
 			if(compara[i][j]=='X' && (*tela).matriz_gui[y+i][x+j].ocupado==1) flag++;
 		}
 	}
 
-	if(flag!=0){
+	if(flag!=0){/*se a peca nao pode ser rotacionada, ela e reescrita usando seu formato antigo, e a funcao acaba*/
 		for(i=0;i<7;i++){
 			for(j=0;j<7;j++){
 				if((*a).formato[i][j]=='X'){
@@ -210,7 +213,7 @@ void rotaciona_peca(Tela* tela,peca* a){
 	return;
 	}	
 
-	for(i=0;i<7;i++){
+	for(i=0;i<7;i++){/*se a peca puder ser rotacionada, o formato na matriz compara e salvo na peca, e ela e reescrita*/
 		for(j=0;j<7;j++){
 			(*a).formato[i][j]=compara[i][j];
 		}
