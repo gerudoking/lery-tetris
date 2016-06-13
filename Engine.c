@@ -41,6 +41,7 @@ int movimento(Tela* tela, int* pontuacao){
 		return 1;
 
   	mostra_tela(tela);
+  	refresh();
 
 	locked = 0;
 	while(locked == 0) {
