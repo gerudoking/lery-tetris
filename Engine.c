@@ -56,7 +56,7 @@ int movimento(Tela* tela, int* pontuacao){
 					move_peca_x(tela, tetromino, 1);
 					break;
 				case KEY_DOWN:
-					resultado = move_peca_y(tela, tetromino);
+					//resultado = move_peca_y(tela, tetromino);
 					gravidade = gravidade*2;
 					break;
 				case 'q':  // 'q' de "Quit"
@@ -68,6 +68,10 @@ int movimento(Tela* tela, int* pontuacao){
 		}
 		else {
 			resultado = move_peca_y(tela, tetromino);
+			
+			if (resultado < 5){
+			locked = 1;
+			}
 		}
 		mostra_tela(tela);
 		refresh();	
