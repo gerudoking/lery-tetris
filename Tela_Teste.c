@@ -38,6 +38,12 @@ void teste_mostra_tela_final(void){
 	CU_ASSERT_TRUE(!resultado);
 }
 
+void teste_mostra_tela_placar(void){
+	int resultado;
+	resultado = mostra_tela_placar(100);
+	CU_ASSERT_TRUE(!resultado);
+}
+
 void adicionar_suite(void){
 	CU_pSuite suite;
 
@@ -47,6 +53,7 @@ void adicionar_suite(void){
 	CU_ADD_TEST(suite, teste_mostra_tela);
 	CU_ADD_TEST(suite, teste_mostra_tela_inicial);
 	CU_ADD_TEST(suite, teste_mostra_tela_final);
+	CU_ADD_TEST(suite, teste_mostra_tela_placar);
 
 }
 
