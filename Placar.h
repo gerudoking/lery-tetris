@@ -10,8 +10,8 @@ struct tipojogador{
 };
 typedef struct tipojogador Jogador;
 
-void cria_placar(void);
+int cria_placar(void);
 
-void atualiza_placar(int pontuacao);
+int atualiza_placar(int pontuacao);
 
-void mostra_placar(void);
+int mostra_placar(void);
