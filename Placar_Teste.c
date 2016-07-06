@@ -1,46 +1,36 @@
-#include "Tela.c"
+
+#include "Placar.c"
 #include "CUnit/CUnit.h"
 #include "CUnit/Basic.h"
 
 void adicionar_suite(void);
 
-void teste_cria_tela(void);
-void teste_mostra_tela(void);
+void teste_cria_placar(void);
+void teste_atualiza_placar(void);
+void teste_mostra_placar(void);
 
-void teste_cria_tela(void){
+void teste_cria_placar(void){
 	int resultado;
-	Tela* t;
-	t = cria_tela();
-	if (t == NULL) resultado = 0;
-	else resultado = 1;
-	CU_ASSERT_TRUE(resultado);
-	free(t);
-}
-
-void teste_mostra_tela(void){
-	int resultado;
-	Tela* t;
-	t = cria_tela();
-	resultado = mostra_tela(t);
-	CU_ASSERT_TRUE(!resultado);
-	free(t);
-}
-
-void teste_mostra_tela_inicial(void){
-	int resultado;
-	resultado = mostra_tela_inicial();
+	resultado = cria_placar();
 	CU_ASSERT_TRUE(!resultado);
 }
 
-void teste_mostra_tela_final(void){
+void teste_atualiza_placar_100(void){
 	int resultado;
-	resultado = mostra_tela_final(100);
+	resultado = atualiza_placar(100);
 	CU_ASSERT_TRUE(!resultado);
 }
 
-void teste_mostra_tela_placar(void){
+void teste_atualiza_placar_999999(void){
 	int resultado;
-	resultado = mostra_tela_placar(100);
+	resultado = atualiza_placar(999999);
+	CU_ASSERT_TRUE(!resultado);
+}
+
+
+void teste_mostra_placar(void){
+	int resultado;
+	resultado = mostra_placar();
 	CU_ASSERT_TRUE(!resultado);
 }
 
@@ -49,11 +39,10 @@ void adicionar_suite(void){
 
 	suite = CU_add_suite("Testes",NULL,NULL);
 
-	CU_ADD_TEST(suite, teste_cria_tela);
-	CU_ADD_TEST(suite, teste_mostra_tela);
-	CU_ADD_TEST(suite, teste_mostra_tela_inicial);
-	CU_ADD_TEST(suite, teste_mostra_tela_final);
-	CU_ADD_TEST(suite, teste_mostra_tela_placar);
+	CU_ADD_TEST(suite, teste_cria_placar);
+	CU_ADD_TEST(suite, teste_mostra_placar);
+	CU_ADD_TEST(suite, teste_mostra_atualiza_placar100);
+	CU_ADD_TEST(suite, teste_mostra_atualiza_placar999999);
 
 }
 
