@@ -13,7 +13,7 @@ void inicia_ncurses(){
 	init_pair(3, COLOR_GREEN, COLOR_BLACK);//por sua vez o 3 como verde
 }
 
-void finaliza_ncurses(){
+int finaliza_ncurses(){
 	endwin();
 }
 
@@ -57,7 +57,6 @@ int movimento(Tela* tela, int* pontuacao){
 					move_peca_x(tela, tetromino, 1);
 					break;
 				case KEY_DOWN:
-					//resultado = move_peca_y(tela, tetromino);
 					gravidade = gravidade*2;
 					break;
 				case 'q':  // 'q' de "Quit"
