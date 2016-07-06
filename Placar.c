@@ -21,7 +21,10 @@ int atualiza_placar(int pontuacao){
   Jogador j;
   int i, checador;
   
-	if (pontuacao > 99999)
+  if (pontuacao > 99999){
+		perror("Valor muito grande a ser escrito em arquivo.");
+		return 3;
+	}
 
   j.pontos = pontuacao;
   mvprintw(1, 1, "Digite o seu nome");
