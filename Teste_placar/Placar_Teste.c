@@ -24,7 +24,7 @@ void teste_atualiza_placar_100(void){
 void teste_atualiza_placar_999999(void){
 	int resultado;
 	resultado = atualiza_placar(999999);
-	CU_ASSERT_TRUE(!resultado);
+	CU_ASSERT_FALSE(!resultado);
 }
 
 
@@ -41,8 +41,8 @@ void adicionar_suite(void){
 
 	CU_ADD_TEST(suite, teste_cria_placar);
 	CU_ADD_TEST(suite, teste_mostra_placar);
-	CU_ADD_TEST(suite, teste_atualiza_placar100);
-	CU_ADD_TEST(suite, teste_atualiza_placar999999);
+	CU_ADD_TEST(suite, teste_atualiza_placar_100);
+	CU_ADD_TEST(suite, teste_atualiza_placar_999999);
 
 }
 
