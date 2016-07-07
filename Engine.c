@@ -14,7 +14,7 @@ void inicia_ncurses(){
 }
 
 int finaliza_ncurses(){
-	endwin();
+	return(endwin());
 }
 
 void deleta_linha(Tela* tela, int linha){
