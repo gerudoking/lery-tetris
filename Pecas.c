@@ -2,6 +2,12 @@
 #include <time.h>
 #include "Pecas.h"
 
+void escreve_peca_lugar_antigo(Tela* tela,peca *a,int x,int y);
+
+void escreve_peca_lugar_novo(Tela* tela,peca* a,int x,int y,int cor);
+
+void limpa_peca(Tela* tela,peca* a,int x,int y);
+
 peca* nova_peca(Tela* tela){
 	int i,j;
 	peca* a;
@@ -72,14 +78,8 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	int x=(*a).posicao_x;
 	int y=(*a).posicao_y;
 	int cor=(*a).cor;
-	for(i=0;i<7;i++){/*primeiro, limpamos a peca da tela. Isso evita que seja confundida com outras pecas*/
-		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+j][x+i].ocupado=0;
-				(*tela).matriz_gui[y+j][x+i].caracter=' ';
-			}
-		}
-	}
+	/*primeiro, limpamos a peca da tela. Isso evita que seja confundida com outras pecas*/
+	limpa_peca(tela,a,x,y);
 	x+=direcao;
 	for(i=0;i<7;i++){
 		for(j=0;j<7;j++){/*agora, usando a matriz formato, vemos se a peca pode ocupar a posicao desejada*/
@@ -89,28 +89,15 @@ int move_peca_x(Tela* tela,peca* a,int direcao){/*vai receber um inteiro, que va
 	}
 	if(flag!=0){/*se for encontrado overlap entre a peca e o resto da tela, a peca e reescrita onde estava, e a funcao para */
 	x=(*a).posicao_x;
-		for(i=0;i<7;i++){
-			for(j=0;j<7;j++){
-				if((*a).formato[i][j]=='X'){
-					(*tela).matriz_gui[y+j][x+i].ocupado=1;
-					(*tela).matriz_gui[y+j][x+i].caracter='X';
-				}
-			}
-		}
+	escreve_peca_lugar_antigo(tela,a,x,y);
 		return 8;
 	}
 	(*a).posicao_x+=direcao;/*se nao houver problema, a coordenada x da peca e alterada, e a peca e escrita em sua nova posicao*/
-	for(i=0;i<7;i++){
-		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X') {
-				(*tela).matriz_gui[y+j][x+i].caracter='X';
-				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
-				(*tela).matriz_gui[y+j][x+i].ocupado=1;
-			}
-		}
-	}
+	escreve_peca_lugar_novo(tela,a,x,y,cor);
 	return 0;	
 }
+
+
 
 int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao necessitamos de entrada de inteiros*/
 	int x=(*a).posicao_x;
@@ -119,15 +106,8 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 	int cor=(*a).cor;
 	
 
-	for(i=0;i<7;i++){/*como na move_peca_y, primeiro limpamos a peca de sua posicao atual, para que nao seja confundida
-	com outras pecas*/
-		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+j][x+i].ocupado=0;
-				(*tela).matriz_gui[y+j][x+i].caracter=' ';
-			}
-		}
-	}
+	/*como na move_peca_x, primeiro limpamos a peca de sua posicao atual, para que nao seja confundida com outras pecas*/
+	limpa_peca(tela,a,x,y);
 	y++;
 	for(i=0;i<7;i++){/*agora, verificamos se a peca poderia entrar na nova posicao, ou seja, se existe outra peca ocupando
 	alguma posicao que seria ocupada por esta peca*/
@@ -139,26 +119,13 @@ int move_peca_y(Tela* tela,peca* a){/*Como so podemos mover para baixo, nao nece
 
 	if(flag!=0){/*se a peca nao puder entrar na posicao desejada, ela e reescrita em sua posicao antiga, e a funcao termina*/
 	y=(*a).posicao_y;
-		for(i=0;i<7;i++){
-			for(j=0;j<7;j++){
-				if((*a).formato[i][j]=='X'){
-					(*tela).matriz_gui[y+j][x+i].ocupado=1;
-					(*tela).matriz_gui[y+j][x+i].caracter='X';
-				}
-			}
-		}
+	escreve_peca_lugar_antigo(tela,a,x,y);
 	return 1;
-	}/*se a peca puder se mover, sua coordenada y e alterada e ela e reescrita*/
-	(*a).posicao_y=y;
-	for(i=0;i<7;i++){
-		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X') {
-				(*tela).matriz_gui[y+j][x+i].caracter='X';
-				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
-				(*tela).matriz_gui[y+j][x+i].ocupado=1;
-			}
-		}
 	}
+	
+	/*se a peca puder se mover, sua coordenada y e alterada e ela e reescrita*/
+	(*a).posicao_y=y;
+	escreve_peca_lugar_novo(tela,a,x,y,cor);
 	return 8;
 }
 
@@ -186,15 +153,7 @@ void rotaciona_peca(Tela* tela,peca* a){/*esta funcao faz a rotacao em 90 graus 
 			compara[7-1-j][i]=k;
 		}	
 	}
-	
-	for(i=0;i<7;i++){/*como nas funcoes move, primeiro limpamos o formato antigo da peca da tela*/
-		for(j=0;j<7;j++){
-			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+j][x+i].ocupado=0;
-				(*tela).matriz_gui[y+j][x+i].caracter=' ';
-			}
-		}
-	}	
+	limpa_peca(tela,a,x,y);/*como nas funcoes move, primeiro limpamos o formato antigo da peca da tela*/	
 	
 	for(i=0;i<7;i++){/*depois, verificamos se, usando o formato na matriz compara, a nova peca pode ser escrita*/
 		for(j=0;j<7;j++){
@@ -203,7 +162,48 @@ void rotaciona_peca(Tela* tela,peca* a){/*esta funcao faz a rotacao em 90 graus 
 	}
 
 	if(flag!=0){/*se a peca nao pode ser rotacionada, ela e reescrita usando seu formato antigo, e a funcao acaba*/
-		for(i=0;i<7;i++){
+
+	escreve_peca_lugar_antigo(tela,a,x,y);
+	return;
+	}	
+
+	for(i=0;i<7;i++){/*se a peca puder ser rotacionada, o formato na matriz compara e salvo na peca, e ela e reescrita*/
+		for(j=0;j<7;j++){
+			(*a).formato[i][j]=compara[i][j];
+		}
+	}
+	escreve_peca_lugar_novo(tela,a,x,y,cor);
+}
+
+
+void limpa_peca(Tela* tela,peca* a,int x,int y){
+	int i,j;	
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X'){
+				(*tela).matriz_gui[y+j][x+i].ocupado=0;
+				(*tela).matriz_gui[y+j][x+i].caracter=' ';
+			}
+		}
+	}
+}
+
+void escreve_peca_lugar_novo(Tela* tela,peca* a,int x,int y, int cor){
+	int i,j;
+	for(i=0;i<7;i++){
+		for(j=0;j<7;j++){
+			if((*a).formato[i][j]=='X') {
+				(*tela).matriz_gui[y+j][x+i].caracter='X';
+				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
+				(*tela).matriz_gui[y+j][x+i].ocupado=1;
+			}
+		}
+	}
+}
+
+void escreve_peca_lugar_antigo(Tela* tela,peca* a,int x,int y){
+	int i,j;
+	for(i=0;i<7;i++){
 			for(j=0;j<7;j++){
 				if((*a).formato[i][j]=='X'){
 					(*tela).matriz_gui[y+j][x+i].ocupado=1;
@@ -211,17 +211,4 @@ void rotaciona_peca(Tela* tela,peca* a){/*esta funcao faz a rotacao em 90 graus 
 				}
 			}
 		}
-	return;
-	}	
-
-	for(i=0;i<7;i++){/*se a peca puder ser rotacionada, o formato na matriz compara e salvo na peca, e ela e reescrita*/
-		for(j=0;j<7;j++){
-			(*a).formato[i][j]=compara[i][j];
-			if((*a).formato[i][j]=='X'){
-				(*tela).matriz_gui[y+j][x+i].ocupado=1;
-				(*tela).matriz_gui[y+j][x+i].caracter='X';
-				(*tela).matriz_gui[y+j][x+i].pardecor=cor;
-			}
-		}
-	}
 }
