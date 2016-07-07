@@ -41,8 +41,8 @@ void adicionar_suite(void){
 
 	CU_ADD_TEST(suite, teste_cria_placar);
 	CU_ADD_TEST(suite, teste_mostra_placar);
-	CU_ADD_TEST(suite, teste_mostra_atualiza_placar100);
-	CU_ADD_TEST(suite, teste_mostra_atualiza_placar999999);
+	CU_ADD_TEST(suite, teste_atualiza_placar100);
+	CU_ADD_TEST(suite, teste_atualiza_placar999999);
 
 }
 
