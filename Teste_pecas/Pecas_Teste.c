@@ -11,8 +11,8 @@
 *
 */
 void teste_nova_peca(){
-	Tela* b;
-	peca* a=nova_peca(b);
+	Tela b;
+	peca* a=nova_peca(&b);
 	CU_ASSERT_PTR_NOT_NULL(a);
 	free(a);
 }
@@ -34,7 +34,7 @@ void teste_move_peca_x_esquerda(){
 	peca* a=nova_peca(&b);
 	resultado=move_peca_x(&b,a,-1);
 	free(a);
-	CU_ASSERT_EQUAL(resultado,0);
+	CU_ASSERT_EQUAL(resultado,8);
 }
 /*
 *	Como com o movimento horizontal, nos asseguramos de que a função de movimento vertical retorna
@@ -46,7 +46,7 @@ void teste_move_peca_y(){
 	peca* a=nova_peca(&b);
 	resultado=move_peca_y(&b,a);
 	free(a);
-	CU_ASSERT_EQUAL(resultado,8);
+	CU_ASSERT_EQUAL(resultado,1);
 }
 void adicionar_suite(){
 	CU_pSuite suite;
@@ -56,13 +56,16 @@ void adicionar_suite(){
 	CU_ADD_TEST(suite, teste_move_peca_x_esquerda);
 	CU_ADD_TEST(suite, teste_move_peca_y);
 }
-int main(){
-if (CUE_SUCCESS != CU_initialize_registry())
-    		return CU_get_error();
+int main(void){
 
-adicionar_suite();
-CU_basic_set_mode(CU_BRM_VERBOSE);
-CU_basic_run_tests();
-CU_cleanup_registry();
-return CU_get_error;
+	if (CUE_SUCCESS != CU_initialize_registry())
+		return CU_get_error();
+
+	adicionar_suite();
+	
+	CU_basic_set_mode(CU_BRM_VERBOSE);
+	CU_basic_run_tests();
+	CU_cleanup_registry();
+
+	return CU_get_error();
 }
